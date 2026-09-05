@@ -1,0 +1,18 @@
+# Cloudflare Pages / Netlify read this file from the build output.
+# Vite fingerprints every asset (index-Dt1Zc387.js), so those files can be
+# cached forever — a returning visitor re-downloads nothing.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# The HTML entry must revalidate, otherwise a deploy never reaches open tabs.
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Sensible baseline security headers for a static site.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN

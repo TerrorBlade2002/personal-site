@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" data-mode="dark" data-accent="cyan">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Arnab Mondal — AI Engineer @ MSCI, previously Data Scientist @ Astra Global. Voice agents, MLOps, observability and automation. A physics lab, a real CLI, and hands-on sandboxes for every project." />
+    <meta name="theme-color" content="#05070e" />
+    <meta property="og:title" content="Arnab // Mission Control" />
+    <meta property="og:description" content="An explorable portfolio: an interactive physics lab, a real CLI, and hands-on sandboxes for every system I've built." />
+    <title>Arnab // Mission Control</title>
+    <script>
+      // Apply the persisted color mode/accent before the stylesheet paints, so
+      // returning visitors never see a flash of the default dark theme.
+      try {
+        var s = JSON.parse(localStorage.getItem('mission-control') || '{}').state || {};
+        var modes = ['dark', 'dim', 'light'], accents = ['cyan', 'green', 'amber', 'violet', 'pink'];
+        var el = document.documentElement;
+        if (modes.indexOf(s.mode) >= 0) { el.dataset.mode = s.mode; el.style.colorScheme = s.mode === 'light' ? 'light' : 'dark'; }
+        if (accents.indexOf(s.theme) >= 0) el.dataset.accent = s.theme;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
