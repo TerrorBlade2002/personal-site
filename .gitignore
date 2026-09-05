@@ -8,3 +8,6 @@ scripts/.edge-profile
 
 # TypeScript incremental build cache
 *.tsbuildinfo
+
+# Wrangler local dev state / build cache
+.wrangler

@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "personal-site",
+  "compatibility_date": "2026-08-01",
+
+  // Static-assets-only Worker: no "main" script, so requests are served straight
+  // off Cloudflare's asset path — no cold start, no CPU billing.
+  "assets": {
+    "directory": "./dist",
+    // Serves index.html (200) for any path that isn't a real file, so clean URLs
+    // like /projects/fraud-detection work on refresh and direct links.
+    // This replaces the Pages-style _redirects rule, which is unsafe here.
+    "not_found_handling": "single-page-application"
+  }
+}

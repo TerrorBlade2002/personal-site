@@ -63,9 +63,9 @@ visit starts locked. The full paginated index is one click away at `/projects`.
 - **Code-splitting.** Core shell ≈80 KB gzipped. three.js (~230 KB gz) lives only in the
   lazy `PhysicsLab` chunk. Each of the 16 sandboxes is its own ~2 KB lazy chunk.
 - **Clean URLs** via `BrowserRouter` (`/projects`, not `/#/projects`). The host must serve
-  `index.html` for unknown paths — `public/_redirects` does that on Cloudflare Pages / Netlify,
-  and Vite dev + preview do it natively. (A host without rewrite support, e.g. plain GitHub
-  Pages, would need `HashRouter` instead.)
+  `index.html` for unknown paths — on Workers that is `assets.not_found_handling` in
+  `wrangler.jsonc`; Vite dev + preview do it natively. (A host without rewrite support, e.g.
+  plain GitHub Pages, would need `HashRouter` instead.)
 - **`public/_headers`** fingerprints assets as immutable for a year and keeps `index.html`
   revalidating, so returning visitors re-download nothing but still get new deploys.
 - **Graceful WebGL fallback**: `src/lib/webgl.ts` probes for a context; if none is available
@@ -84,21 +84,36 @@ Terminal: `` ` `` toggles. `help`, `ls`, `open <slug>`, `cat <codename>`, `neofe
 
 ## Deploy
 
-Cloudflare Pages (recommended — free, unlimited bandwidth, global CDN):
+Cloudflare **Workers** (free, unlimited bandwidth, global CDN). Cloudflare's newer flow
+deploys via Wrangler rather than the old Pages build fields, so the config lives in the repo:
 
-| Setting | Value |
+| Workers Builds field | Value |
 |---|---|
-| Framework preset | Vite |
 | Build command | `npm run build` |
-| Build output directory | `dist` |
-| Env var | `NODE_VERSION` = `22` |
+| Deploy command | `npx wrangler deploy` |
 
-Connect the GitHub repo once and every `git push` to `main` triggers a rebuild and deploy
-(~2 min). Pull requests get their own preview URL automatically. `_headers` and `_redirects`
-are picked up from the build output — no dashboard configuration needed.
+Everything else is repo config — nothing to set in the dashboard:
 
-Netlify works identically with the same two files. A host without SPA rewrite support would
-need `HashRouter` back in `src/main.tsx`.
+- **`wrangler.jsonc`** — `assets.directory: "./dist"` replaces the old "build output directory"
+  field, and `assets.not_found_handling: "single-page-application"` serves `index.html` for
+  unknown paths so clean URLs survive refresh and direct links.
+- **`.node-version`** (`22`) — replaces the `NODE_VERSION` environment variable.
+- **`public/_headers`** — supported natively by Workers static assets; copied into `dist` at build.
+
+> **Do not add a `_redirects` file with `/* /index.html 200` here.** On Pages that is the
+> standard SPA rule, but on Workers redirects are applied *regardless of whether an asset
+> matches*, so a catch-all would intercept `/assets/*.js` and serve HTML instead of JavaScript.
+> `not_found_handling` is the correct mechanism. Verified with `wrangler dev`: deep links return
+> the SPA shell while `/assets/index-*.js` still returns real JavaScript.
+
+Validate the config without deploying:
+
+```bash
+npx wrangler deploy --dry-run
+```
+
+Connect the GitHub repo once and every `git push` to `main` rebuilds and deploys (~2 min);
+non-production branches get a preview version instead. Private repos are supported on the free plan.
 
 ## Career timeline
 
