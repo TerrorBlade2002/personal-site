@@ -86,7 +86,7 @@ export default function GepaSandbox() {
             </div>
           )
         })}
-        {revealed === 0 && <span className="t-sys" style={{ fontSize: 12.5 }}>pick a prompt, run the suite, compare the scoreboards. Then imagine tuning this by hand at 11pm — that’s why the optimizer exists.</span>}
+        {revealed === 0 && <span className="t-sys" style={{ fontSize: 12.5 }}>Pick a prompt, run the suite, compare the scoreboards.</span>}
         {revealed === CASES.length && !optimized && (
           <div className="mono-note">now flip to the <b style={{ color: 'var(--accent)' }}>GEPA-optimized prompt</b> and re-run — the rubric’s priority rules (DNC beats everything) are what the optimizer learned to respect.</div>
         )}

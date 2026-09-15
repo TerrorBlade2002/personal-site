@@ -27,11 +27,10 @@ export const profile = {
   linkedin: 'https://www.linkedin.com/in/arnab-mondal-26a3b9239/',
   linkedinLabel: 'linkedin.com/in/arnab-mondal',
   education: 'B.Tech, IIT Bombay (2020–2024)',
-  tagline: 'I build production voice agents, ML pipelines and the observability that keeps them honest.',
+  tagline: 'Voice agents, ML pipelines, and the observability that keeps them honest.',
   about: [
     'AI Engineer at MSCI (Pune). Before that, Manager · Data Scientist at Astra Global, where I shipped AI systems that survived contact with production: a LiveKit voice agent live for two paying clients at p95 1.1s end-of-turn and $0.07/min, a multi-agent call auditor that lifted QA checklist accuracy from 92.6% to 99.4%, usage telemetry for 400+ users, a voicemail platform pushing 5k TTS messages a day — and the Prometheus/Grafana plumbing that proved all of it worked.',
-    'My happy place is the seam between ML and infrastructure — where a model is only as good as its latency budget, its retry ladder and its cost-per-call. Most of what you see in the archive was built during the Astra Global years; the rest is independent work from my IIT Bombay days onward.',
-    'This site is a hands-on museum: every project has a sandbox — a small, honest simulation of the real system you can poke at in the browser — plus the numbers and architecture of the production version.',
+    'I work at the seam between ML and infrastructure, where a model is only as good as its latency budget, its retry ladder and its cost per call. Most of the work listed here is from the Astra Global years; the rest is independent.',
   ],
   skills: {
     'Voice AI': ['LiveKit Agents', 'Retell AI', 'OpenAI Realtime API', 'Deepgram', 'Cartesia TTS', 'voice cloning', 'WebRTC / SIP telephony (TCN, Croco)', 'turn detection & barge-in'],
@@ -53,7 +52,7 @@ export const profile = {
       start: 'Aug 2026',
       end: 'Present',
       current: true,
-      summary: 'Current chapter: AI engineering at one of the world’s largest providers of investment indexes, analytics and risk tooling.',
+      summary: 'AI engineering at one of the world’s largest providers of investment indexes, analytics and risk tooling.',
       tags: ['AI systems', 'LLM engineering', 'Python'],
     },
     {
@@ -64,7 +63,7 @@ export const profile = {
       location: 'Noida, IN · on-site',
       start: 'Oct 2025',
       end: 'Jul 2026',
-      summary: 'Owned the voice-AI and analytics stack end to end — from agents on live dialers to the observability that graded them. Almost everything in the archive was built here. Recognized for $15k+ in added revenue and cost savings in 10 months.',
+      summary: 'Owned the voice-AI and analytics stack end to end, from agents on live dialers to the observability that graded them. Most of the projects listed here were built in this role. Recognized for $15k+ in added revenue and cost savings over 10 months.',
       bullets: [
         'Virtual Transfer Agent (LiveKit Cloud): ultra-low-latency AI lead-qualifier + live-transfer agent with cloned voices — p95 1.1s / p99 1.65s end-of-turn, $0.07/min average against a $0.11/min cap; live for the internal team + 2 clients across 2 revenue lines. GEPA tuning on a self-authored eval schema, per-turn test suites, 25+ metric series on Prometheus/Grafana/Loki. Built a one-of-its-kind three-way conferencing layer bridging it to legacy telephony (TCN, Croco) — IP pending.',
         'Call Audit Supervisor: multi-agent QA platform at $0.06/call-min — rubric distiller, multimodal judge (audio + transcript), cost-aware router, objection clustering, RL-tuned rewriter, feedback agent. Checklist accuracy 92.6% → 99.4% vs 3 junior QAs; CI eval gate. Cloud Run, Spanner, Gemini.',
@@ -97,7 +96,7 @@ export const profile = {
       summary: 'A Dockerized real-time fraud-detection pipeline (Kafka, Airflow, MLflow, MinIO, XGBoost, PySpark — AUC-PR 0.77, recall 0.95 on 150k samples), a semantic book recommender (LangChain/Chroma + zero-shot & emotion models), and an NLP-scored verbal assessment system.',
       tags: ['MLOps', 'Kafka', 'XGBoost', 'LangChain', 'Gradio'],
       link: '/projects/fraud-detection',
-      linkLabel: 'play with the fraud pipeline →',
+      linkLabel: 'Open the fraud pipeline →',
     },
     {
       id: 'iitb',
@@ -107,10 +106,10 @@ export const profile = {
       location: 'Mumbai, IN',
       start: '2020',
       end: '2024',
-      summary: 'Where the first repos happened: competitive programming, a Django storefront for Season of Code ’22, and the habit of shipping things that strangers can open.',
+      summary: 'Computer science foundations, competitive programming, and a Django storefront built for Season of Code ’22.',
       tags: ['IIT Bombay', 'Season of Code'],
       link: '/projects/ecomm',
-      linkLabel: 'see the 2022 storefront →',
+      linkLabel: 'Open the 2022 storefront →',
     },
   ] as Experience[],
 }

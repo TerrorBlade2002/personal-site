@@ -52,15 +52,15 @@ const Row = ({ k, v }: { k: string; v: string }) => (
 function Help() {
   const rows: [string, string][] = [
     ['help', 'this menu'],
-    ['ls [--all]', 'list project systems (also declassifies them on ~/home)'],
-    ['reveal <n|all>', 'declassify n more systems on the home page'],
+    ['ls [--all]', 'list projects (also shows them on the home page)'],
+    ['reveal <n|all>', 'show n more projects on the home page'],
     ['open <slug>', 'jump to a project (try: open fraud-detection)'],
     ['cat <file>', 'read about.md · skills.json · contact.txt · any codename'],
     ['whoami / neofetch', 'operator identity card'],
     ['projects --cat <c>', 'filter by voice-ai · ml · observability · automation · fullstack · data'],
     ['skills', 'stack inventory'],
     ['contact / socials', 'how to reach me'],
-    ['lab <pendulum|slits|reset|random>', 'drive the physics lab on ~/home'],
+    ['lab <pendulum|slits|reset|random>', 'control the scene on the home page'],
     ['theme <dark|dim|light>', 'switch color mode (also: mode <…>)'],
     ['theme <cyan|green|amber|violet|pink>', 'switch accent'],
     ['stats [--reset] / achievements', 'your XP, rank, trophies (--reset wipes progress in this browser)'],
@@ -80,7 +80,7 @@ function Help() {
 function Ls({ ctx, all }: { ctx: Ctx; all: boolean }) {
   return (
     <div>
-      <div className="t-dim">total {projects.length} systems{all ? ' · all declassified on ~/home' : ` · ${Math.min(projects.length, Math.max(ctx.state.revealed, 6))} declassified on ~/home (ls --all for everything)`}</div>
+      <div className="t-dim">total {projects.length} systems{all ? ' · all shown on the home page' : ` · ${Math.min(projects.length, Math.max(ctx.state.revealed, 6))} shown on the home page (ls --all for everything)`}</div>
       {projects.map((p) => (
         <div key={p.slug}>
           <span className="t-dim">{p.started}  </span>
@@ -145,13 +145,13 @@ export function execute(line: string, ctx: Ctx): ReactNode | 'CLEAR' | 'EXIT' {
       if (arg === 'all' || arg === '--all') {
         ctx.reveal(projects.length)
         if (!onHome()) ctx.navigate('/')
-        return <span className="t-grn">🔓 all {projects.length} systems declassified on ~/home</span>
+        return <span className="t-grn">all {projects.length} projects shown on the home page</span>
       }
       const n = parseInt(arg || '3', 10)
       if (Number.isNaN(n) || n < 1) return <span className="t-red">reveal: usage — reveal &lt;n|all&gt;</span>
       ctx.reveal(ctx.state.revealed + n)
       if (!onHome()) ctx.navigate('/')
-      return <span className="t-grn">🔓 {Math.min(projects.length, ctx.state.revealed + n)}/{projects.length} systems visible on ~/home</span>
+      return <span className="t-grn">{Math.min(projects.length, ctx.state.revealed + n)} of {projects.length} projects shown on the home page</span>
     }
     case 'clear': case 'cls': return 'CLEAR'
     case 'exit': case 'quit': case 'q': return 'EXIT'
@@ -293,7 +293,7 @@ export function execute(line: string, ctx: Ctx): ReactNode | 'CLEAR' | 'EXIT' {
       const goHome = () => { if (!onHome()) ctx.navigate('/') }
       if (!t) return (
         <div>
-          <div className="t-dim">physics lab · current: <span className="t-acc">{EXPERIMENT_META[ctx.lab.experiment].name}</span></div>
+          <div className="t-dim">scene · current: <span className="t-acc">{EXPERIMENT_META[ctx.lab.experiment].name}</span></div>
           {EXPERIMENTS.map((e) => <div key={e}><span className="t-acc">lab {e}</span> <span className="t-dim">— {EXPERIMENT_META[e].blurb}</span></div>)}
           <div><span className="t-acc">lab reset</span> <span className="t-dim">— restore defaults</span> · <span className="t-acc">lab random</span> <span className="t-dim">— random pendulum start</span></div>
         </div>
@@ -320,7 +320,7 @@ export function execute(line: string, ctx: Ctx): ReactNode | 'CLEAR' | 'EXIT' {
           <div>
             <div className="t-grn">[sudo] privileges granted. Deploying resume payload…</div>
             <div>📧 <a href={`mailto:${profile.email}?subject=Let's build something`}>email {profile.name}</a> · 🐙 <a href={profile.github} target="_blank" rel="noreferrer">audit the code first</a></div>
-            <div className="t-dim">+50 xp · excellent judgment detected</div>
+            <div className="t-dim">+50 xp</div>
           </div>
         )
       }

@@ -1,10 +1,9 @@
 import { useMemo } from 'react'
 
-// Static hero for visitors who can't run the WebGL lab (no context available,
-// or prefers-reduced-motion). It integrates the *same* double-pendulum
-// Lagrangian with the same RK4 scheme as src/three/DoublePendulum.tsx and
-// draws the resulting trace as an SVG polyline — so the physics stays honest
-// even when the GPU path isn't available. No canvas, no animation, no WebGL.
+// Static hero for visitors who can't run the WebGL scene (no context
+// available, or prefers-reduced-motion). It integrates the same double
+// pendulum with the same RK4 scheme as src/three/DoublePendulum.tsx and draws
+// the resulting trace as an SVG polyline — no canvas, no animation, no WebGL.
 
 const L1 = 1.15
 const L2 = 1.05
@@ -48,8 +47,7 @@ function simulate(th1: number, th2: number, seconds: number, sampleEvery: number
     for (let j = 0; j < 4; j++) s[j] += (DT / 6) * (k1[j] + 2 * k2[j] + 2 * k3[j] + k4[j])
     if (i % sampleEvery === 0) {
       const x = L1 * Math.sin(s[0]) + L2 * Math.sin(s[2])
-      // SVG y grows downward, physics y grows up — negate.
-      const y = -(-L1 * Math.cos(s[0]) - L2 * Math.cos(s[2]))
+      const y = -(-L1 * Math.cos(s[0]) - L2 * Math.cos(s[2])) // SVG y grows downward
       pts.push(`${x.toFixed(3)},${y.toFixed(3)}`)
     }
   }
@@ -60,9 +58,7 @@ function simulate(th1: number, th2: number, seconds: number, sampleEvery: number
   return { points: pts.join(' '), bob1: [x1, y1] as const, bob2: [x2, y2] as const }
 }
 
-export default function LabFallback({ reason }: { reason: 'webgl' | 'motion' }) {
-  // Three traces from near-identical starts: the same chaos story the 3D lab
-  // tells with its ghost ensemble, told in one still frame.
+export default function LabFallback() {
   const runs = useMemo(() => [
     { ...simulate(2.35, 2.0, 11, 4), color: 'var(--accent)', width: 0.022, opacity: 0.95 },
     { ...simulate(2.351, 2.0, 11, 4), color: 'var(--violet)', width: 0.016, opacity: 0.6 },
@@ -85,19 +81,12 @@ export default function LabFallback({ reason }: { reason: 'webgl' | 'motion' }) 
             strokeLinecap="round"
           />
         ))}
-        {/* final pose of the primary pendulum */}
         <line x1="0" y1="0" x2={main.bob1[0]} y2={main.bob1[1]} stroke="var(--line-bright)" strokeWidth="0.045" strokeLinecap="round" />
         <line x1={main.bob1[0]} y1={main.bob1[1]} x2={main.bob2[0]} y2={main.bob2[1]} stroke="var(--line-bright)" strokeWidth="0.04" strokeLinecap="round" />
         <circle cx="0" cy="0" r="0.07" fill="var(--muted)" />
         <circle cx={main.bob1[0]} cy={main.bob1[1]} r="0.15" fill="var(--accent)" />
         <circle cx={main.bob2[0]} cy={main.bob2[1]} r="0.13" fill="var(--violet)" />
       </svg>
-      <div className="hero-fallback-note">
-        {reason === 'motion'
-          ? 'still frame — reduced-motion is on'
-          : 'still frame — WebGL unavailable here'}
-        <span>double pendulum · RK4 · 3 traces 0.001 rad apart</span>
-      </div>
     </div>
   )
 }

@@ -7,8 +7,7 @@ export default function About() {
   return (
     <main className="page">
       <div className="sec-head">
-        <h2>About the operator</h2>
-        <span className="path">cat ~/about.md</span>
+        <h2>About</h2>
       </div>
 
       <div className="panel">
@@ -27,14 +26,13 @@ export default function About() {
       <section className="sec">
         <div className="sec-head">
           <h2>Trajectory</h2>
-          <span className="path">git log --graph ~/career</span>
         </div>
         <Timeline items={profile.experience} />
       </section>
 
       <div className="about-grid">
         <div className="panel">
-          <h2><span className="ico">⚙</span> Arsenal</h2>
+          <h2><span className="ico">⚙</span> Stack</h2>
           {Object.entries(profile.skills).map(([group, items]) => (
             <div className="skill-group" key={group}>
               <b>{group}</b>
@@ -45,20 +43,20 @@ export default function About() {
           ))}
         </div>
         <div className="panel">
-          <h2><span className="ico">🏆</span> Your trophy cabinet</h2>
+          <h2><span className="ico">#</span> Achievements</h2>
           <div className="tag-row">
             {ACHIEVEMENTS.map((a) => (
               <span
                 key={a.id}
                 className={`tag ${unlocked.includes(a.id) ? 'on' : ''}`}
-                title={unlocked.includes(a.id) ? a.desc : 'locked — keep exploring'}
+                title={unlocked.includes(a.id) ? a.desc : 'locked'}
               >
-                {unlocked.includes(a.id) ? `${a.icon} ${a.name}` : '🔒 ???'}
+                {unlocked.includes(a.id) ? `${a.icon} ${a.name}` : '···'}
               </span>
             ))}
           </div>
           <p style={{ marginTop: 12, fontSize: 12 }}>
-            Achievements unlock as you reveal projects, run terminal commands, tinker with the lab and play with sandboxes.
+            {unlocked.length} of {ACHIEVEMENTS.length} unlocked.
           </p>
         </div>
       </div>

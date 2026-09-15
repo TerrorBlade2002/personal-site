@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
-// Shared state for the physics lab on the landing page. Read by the 3D scene,
-// the HTML control panel and the terminal's `lab` command. Session-only.
+// Shared state for the interactive scene on the landing page. Read by the 3D
+// scene, the HTML control rail/drawer and the terminal's `lab` command.
 export const EXPERIMENTS = ['pendulum', 'slits'] as const
 export type Experiment = typeof EXPERIMENTS[number]
 
@@ -9,12 +9,12 @@ export const EXPERIMENT_META: Record<Experiment, { name: string; short: string; 
   pendulum: {
     name: 'Double pendulum',
     short: 'pendulum',
-    blurb: 'Two rods, four state variables, zero long-term predictability. Drag a bob and release — the ghost copies start 0.001 rad away and still end up somewhere else.',
+    blurb: 'Chaotic motion: the ghost copies start a thousandth of a radian apart and still diverge. Drag either bob to set a new start.',
   },
   slits: {
-    name: "Young's double slit",
+    name: 'Double slit',
     short: 'slits',
-    blurb: 'A plane wave meets two slits and interferes with itself; the far screen shows the time-averaged fringes. Close one slit and they vanish.',
+    blurb: 'Wave interference: the far screen shows the fringe pattern. Close one slit and it disappears.',
   },
 }
 

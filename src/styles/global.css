@@ -213,13 +213,13 @@ button { font-family: var(--mono); }
   position: absolute; z-index: 6; pointer-events: none;
   left: max(22px, calc((100vw - var(--maxw)) / 2 + 22px)); right: auto; bottom: auto;
   top: 50%; transform: translateY(-52%);
-  width: min(46vw, 560px);
+  width: min(48vw, 600px);
   text-align: left; padding: 0;
 }
 .hero-copy > * { pointer-events: auto; }
 .hero-kicker { color: var(--accent); font-size: 12.5px; letter-spacing: 0.32em; text-transform: uppercase; margin-bottom: 12px; }
 .hero-title {
-  font-family: var(--display); font-size: clamp(36px, 4.6vw, 62px); font-weight: 700;
+  font-family: var(--display); font-size: clamp(34px, 3.7vw, 50px); font-weight: 700;
   margin: 0 0 14px; letter-spacing: -0.02em; line-height: 1.04;
   text-shadow: 0 0 40px rgba(var(--accent-rgb), calc(var(--glow-a) + 0.1));
 }
@@ -306,7 +306,7 @@ button { font-family: var(--mono); }
 .sec { margin: 64px 0; }
 .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 22px; flex-wrap: wrap; }
 .sec-head h2 { font-family: var(--display); font-size: 26px; margin: 0; letter-spacing: -0.01em; }
-.sec-head .path { color: var(--muted); font-size: 13px; }
+.sec-head .path { color: var(--dim); font-size: 12.5px; }
 .sec-head .spacer { flex: 1; }
 
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
@@ -363,14 +363,16 @@ button { font-family: var(--mono); }
 .archive-head .count { color: var(--muted); font-size: 12.5px; }
 .archive-head .actions { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
 .archive-body { padding: 22px; }
-.archive-empty { color: var(--muted); font-size: 13.5px; display: flex; flex-direction: column; gap: 8px; }
-.archive-empty code { color: var(--accent); background: var(--accent-soft); border-radius: 4px; padding: 1px 7px; }
-.archive-redacted { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-top: 16px; }
-.redacted {
-  height: 150px; border: 1px dashed var(--line-bright); border-radius: var(--radius);
-  background: repeating-linear-gradient(135deg, transparent 0 8px, rgba(var(--accent-rgb), 0.05) 8px 16px);
-  display: flex; align-items: center; justify-content: center; color: var(--dim); font-size: 12px; letter-spacing: 0.2em;
+.archive-empty { position: relative; }
+.placeholders { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+.placeholder {
+  height: 168px; border: 1px solid var(--line); border-radius: var(--radius);
+  background: linear-gradient(100deg, var(--panel) 30%, var(--panel2) 50%, var(--panel) 70%);
+  background-size: 220% 100%; animation: shimmer 2.4s linear infinite; opacity: 0.85;
 }
+@keyframes shimmer { to { background-position: -120% 0; } }
+.placeholder-cta { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); box-shadow: var(--shadow), var(--glow); }
+.sec-link { font-size: 12.5px; color: var(--accent); }
 .archive-foot { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
 
 /* ================= Timeline (About) ================= */
@@ -756,4 +758,29 @@ button { font-family: var(--mono); }
   .hdr-tab { width: 76px; height: 26px; line-height: 24px; font-size: 11px; }
   .hdr.collapsed .hdr-tab { height: 30px; line-height: 28px; }
   .hdr.nav-open .hdr-tab { display: none; }
+}
+
+/* ================= Scene drag cue (wordless-ish, self-dismissing) ================= */
+.lab-cue {
+  position: absolute; z-index: 7; pointer-events: none;
+  right: 84px; top: 50%; transform: translateY(-50%);
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 11px; border-radius: 999px;
+  background: var(--panel); border: 1px solid var(--line-bright); box-shadow: var(--shadow);
+  color: var(--text); font-size: 11.5px; letter-spacing: 0.04em;
+  animation: cue-nudge 1.6s ease-in-out infinite, cue-in 0.5s ease both;
+}
+@keyframes cue-nudge { 50% { transform: translateY(-50%) translateX(-9px); } }
+@keyframes cue-in { from { opacity: 0; } }
+.lab-rail-label { display: none; }
+@media (max-width: 900px) {
+  .lab-cue { right: auto; left: 50%; top: calc(var(--header-h) + 36px + 50px + 14px); transform: translateX(-50%); }
+  @keyframes cue-nudge { 50% { transform: translateX(-50%) translateX(-9px); } }
+}
+@media (prefers-reduced-motion: reduce) { .lab-cue { animation: cue-in 0.01ms both; } }
+
+/* The kicker's wide tracking wraps badly on narrow screens. */
+@media (max-width: 700px) {
+  .hero-kicker { letter-spacing: 0.16em; font-size: 10.5px; }
+  .hero-title { font-size: clamp(28px, 7.4vw, 40px); }
 }

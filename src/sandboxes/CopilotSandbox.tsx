@@ -80,7 +80,7 @@ export default function CopilotSandbox() {
             <div style={{ fontSize: 13, color: feedback.startsWith('✓') ? 'var(--green)' : 'var(--red)' }}>{feedback}</div>
           )}
           <div className="mono-note" style={{ marginTop: 8 }}>
-            why it matters: these human labels + fused signals become the training timeline for the Phase-1 deterministic reducer — the thing that must know a human answered before any copilot dares to whisper.
+            These labels, fused with the UI and audio signals, become the training timeline for the Phase-1 reducer that has to know a human answered before the copilot says anything.
           </div>
         </div>
       </div>

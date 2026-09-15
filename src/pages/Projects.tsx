@@ -26,20 +26,20 @@ export default function Projects() {
   return (
     <main className="page">
       <div className="sec-head">
-        <h2>Project systems</h2>
-        <span className="path">ls ~/projects | wc -l → {projects.length}</span>
+        <h2>Projects</h2>
+        <span className="path">{projects.length} systems</span>
       </div>
 
       <div className="filter-bar">
         <input
           className="search"
-          placeholder="grep projects… (name, tag, stack)"
+          placeholder="Search name, tag or stack…"
           value={q}
           onChange={(e) => { setQ(e.target.value); setPage(1) }}
           aria-label="search projects"
         />
         <button className={`chip ${cat === 'all' ? 'on' : ''}`} onClick={() => { setCat('all'); setPage(1) }}>
-          all ({projects.length})
+          All ({projects.length})
         </button>
         {CATS.map((c) => {
           const n = projects.filter((p) => p.category === c).length
@@ -53,8 +53,7 @@ export default function Projects() {
 
       {slice.length === 0 ? (
         <div className="empty-state">
-          <div className="big">∅</div>
-          <div>grep returned nothing. Loosen the filter.</div>
+          <div>No matches.</div>
         </div>
       ) : (
         <div className="grid">
@@ -71,7 +70,7 @@ export default function Projects() {
             </button>
           ))}
           <button disabled={safePage === pages} onClick={() => setPage(safePage + 1)}>→</button>
-          <span className="info">page {safePage}/{pages} · {filtered.length} systems</span>
+          <span className="info">page {safePage} of {pages} · {filtered.length} projects</span>
         </div>
       )}
     </main>

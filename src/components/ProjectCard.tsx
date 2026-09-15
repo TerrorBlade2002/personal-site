@@ -9,7 +9,7 @@ export default function ProjectCard({ p, index = 0, animate = false }: { p: Proj
   if (animate) style.animationDelay = `${(index % REVEAL_STEP) * 110}ms`
   return (
     <Link to={`/projects/${p.slug}`} className={`card ${animate ? 'decrypt' : ''}`} style={style}>
-      {visited && <span className="visited-tick" title="visited">✓ explored</span>}
+      {visited && <span className="visited-tick" title="visited">✓ visited</span>}
       <div className="card-top">
         <span className="card-codename">{p.codename}</span>
         <span>·</span>
@@ -23,7 +23,7 @@ export default function ProjectCard({ p, index = 0, animate = false }: { p: Proj
       <div className={`card-meta status-${p.status}`}>
         <span><span className="status-dot" />{p.status}</span>
         <span>{p.period}</span>
-        <span style={{ marginLeft: 'auto', color: p.color }}>run sandbox →</span>
+        <span style={{ marginLeft: 'auto', color: p.color }}>Try the demo →</span>
       </div>
     </Link>
   )

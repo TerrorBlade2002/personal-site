@@ -40,7 +40,7 @@ export default function EcommSandbox() {
 
   const checkout = () => {
     touch()
-    setOrder(`ORD-${Math.floor(1000 + Math.random() * 9000)} confirmed · $${total.toFixed(2)} · ${entries.reduce((s, [, n]) => s + n, 0)} items · a Django admin somewhere just updated inventory`)
+    setOrder(`ORD-${Math.floor(1000 + Math.random() * 9000)} confirmed · $${total.toFixed(2)} · ${entries.reduce((s, [, n]) => s + n, 0)} items`)
     setCart({})
     setApplied(false)
     setCoupon('')
@@ -68,7 +68,7 @@ export default function EcommSandbox() {
         </div>
         <div className="sb-col">
           <span className="sb-label">cart 🛒</span>
-          {entries.length === 0 && !order && <span className="t-sys" style={{ fontSize: 12.5 }}>cart is empty — treat yourself.</span>}
+          {entries.length === 0 && !order && <span className="t-sys" style={{ fontSize: 12.5 }}>Cart is empty.</span>}
           {entries.map(([id, n]) => {
             const item = CATALOG.find((i) => i.id === id)!
             return (
@@ -87,8 +87,8 @@ export default function EcommSandbox() {
                 <input className="sb-input" placeholder="coupon code?" value={coupon} onChange={(e) => setCoupon(e.target.value)} style={{ flex: 1 }} />
                 <button className="btn small ghost" onClick={applyCoupon}>apply</button>
               </div>
-              {applied && <span className="t-ok" style={{ fontSize: 12.5 }}>✓ SOC22 applied — 20% off (a Season of Code souvenir)</span>}
-              {!applied && coupon && <span className="t-err" style={{ fontSize: 12.5 }}>invalid code… it’s the name of the program + the year 😉</span>}
+              {applied && <span className="t-ok" style={{ fontSize: 12.5 }}>SOC22 applied — 20% off</span>}
+              {!applied && coupon && <span className="t-err" style={{ fontSize: 12.5 }}>Invalid code. Hint: the program name and the year.</span>}
               <div className="sb-kv"><span>subtotal</span><b>${subtotal.toFixed(2)}</b></div>
               {applied && <div className="sb-kv"><span>discount</span><b style={{ color: 'var(--green)' }}>−${discount.toFixed(2)}</b></div>}
               <div className="sb-kv"><span>total</span><b style={{ color: 'var(--accent)', fontSize: 15 }}>${total.toFixed(2)}</b></div>

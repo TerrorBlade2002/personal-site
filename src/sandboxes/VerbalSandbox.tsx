@@ -70,7 +70,7 @@ export default function VerbalSandbox() {
               </div>
             ))}
             <div className="mono-note">
-              {overall > 70 ? '✓ hire signal — structured, confident, low-filler. The real pipeline would store this to Firestore and notify the recruiter.' : 'coaching tip: drop the fillers, add one “I resolved/led/handled” sentence, and finish with the outcome.'}
+              {overall > 70 ? 'Strong answer — structured, confident, low filler.' : 'Drop the fillers, add one “I resolved / led / handled” sentence, and finish with the outcome.'}
             </div>
           </div>
         )}

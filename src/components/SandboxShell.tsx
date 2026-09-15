@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react'
 import { useApp } from '../store/appStore'
 
-// Common chrome for every sandbox: title bar, SIMULATION badge, honesty note.
-// Calling `touch()` on first meaningful interaction feeds the XP system.
-export default function SandboxShell({ id, title, note, children }: {
+// Common chrome for every demo: title bar, DEMO tag, and a footnote on how the
+// demo differs from the production system it stands in for.
+export default function SandboxShell({ title, note, children }: {
   id: string
   title: string
   note: string
@@ -14,10 +14,10 @@ export default function SandboxShell({ id, title, note, children }: {
       <div className="sandbox-bar">
         <span className="dots"><i /><i /><i /></span>
         <span className="title">{title}</span>
-        <span className="badge">SIMULATION</span>
+        <span className="badge">DEMO</span>
       </div>
       <div className="sandbox-body">{children}</div>
-      <div className="sandbox-note">⚠ honest-abstraction notice: {note}</div>
+      <div className="sandbox-note"><b>Compared with production:</b> {note}</div>
     </div>
   )
 }

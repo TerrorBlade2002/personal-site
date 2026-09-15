@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 import { EXPERIMENT_META, useLab } from '../store/labStore'
 import { useApp } from '../store/appStore'
 
-// Physics-lab controls: a slim icon rail docked to the right edge of the hero
-// (experiment switch, pause, reset, randomize, tune) and a drawer that slides
-// out beside it on demand for the sliders and readouts. Closed by default so
-// the scene and the hero copy stay unobstructed.
+// Controls for the interactive scene: a slim icon rail on the right edge
+// (experiment, pause, reset, randomize, tune) and a drawer for the parameters.
+// Everything is closed by default so the scene and the copy stay unobstructed.
+// A wordless drag cue appears once, then dismisses on first interaction.
 
 const PendulumIcon = () => (
   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -19,11 +19,18 @@ const WavesIcon = () => (
     <path d="M3 8c2.5-2.6 5-2.6 7.5 0s5 2.6 7.5 0" /><path d="M3 13c2.5-2.6 5-2.6 7.5 0s5 2.6 7.5 0" /><path d="M3 18c2.5-2.6 5-2.6 7.5 0s5 2.6 7.5 0" />
   </svg>
 )
+const HandIcon = () => (
+  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12" /><path d="M11 11.5V4.5a1.5 1.5 0 0 1 3 0V12" />
+    <path d="M14 11.5V6.5a1.5 1.5 0 0 1 3 0V13" /><path d="M17 12.5a1.5 1.5 0 0 1 3 0V16a6 6 0 0 1-6 6h-2a6 6 0 0 1-5-2.7L4.2 15.6a1.5 1.5 0 0 1 2.4-1.8L8 15.5" />
+  </svg>
+)
 
 export default function LabControls() {
   const lab = useLab()
   const unlock = useApp((s) => s.unlock)
   const [open, setOpen] = useState(false)
+  const [cue, setCue] = useState(true)
   const meta = EXPERIMENT_META[lab.experiment]
   const touch = () => unlock('physicist')
   const isPendulum = lab.experiment === 'pendulum'
@@ -36,6 +43,14 @@ export default function LabControls() {
     return () => window.removeEventListener('keydown', onKey)
   }, [open])
 
+  // Drag cue: gone on the first pointer interaction anywhere, or after a while.
+  useEffect(() => {
+    const off = () => setCue(false)
+    const t = setTimeout(off, 9000)
+    window.addEventListener('pointerdown', off, { once: true })
+    return () => { clearTimeout(t); window.removeEventListener('pointerdown', off) }
+  }, [])
+
   const togglePause = () => {
     if (isPendulum) lab.setPendulum({ paused: !lab.pendulum.paused })
     else lab.setSlits({ paused: !lab.slits.paused })
@@ -44,8 +59,14 @@ export default function LabControls() {
 
   return (
     <>
-      <div className="lab-rail" data-testid="lab-rail" role="toolbar" aria-label="physics lab controls">
-        <span className="lab-rail-label">LAB</span>
+      {cue && isPendulum && (
+        <div className="lab-cue" aria-hidden>
+          <HandIcon />
+          <span>drag</span>
+        </div>
+      )}
+
+      <div className="lab-rail" data-testid="lab-rail" role="toolbar" aria-label="scene controls">
         <button
           className={`rail-btn ${isPendulum ? 'on' : ''}`}
           data-tip="Double pendulum"
@@ -55,7 +76,7 @@ export default function LabControls() {
         ><PendulumIcon /></button>
         <button
           className={`rail-btn ${!isPendulum ? 'on' : ''}`}
-          data-tip="Young's double slit"
+          data-tip="Double slit"
           data-testid="lab-exp-slits"
           aria-pressed={!isPendulum}
           onClick={() => { lab.setExperiment('slits'); touch() }}
@@ -66,12 +87,12 @@ export default function LabControls() {
         </button>
         <button className="rail-btn" data-tip="Reset" onClick={() => { lab.reset(); touch() }} aria-label="reset">↺</button>
         {isPendulum && (
-          <button className="rail-btn" data-tip="Randomize start" onClick={() => { lab.randomize(); touch() }} aria-label="randomize">⚄</button>
+          <button className="rail-btn" data-tip="Randomize" onClick={() => { lab.randomize(); touch() }} aria-label="randomize">⚄</button>
         )}
         <i className="rail-sep" />
         <button
           className={`rail-btn ${open ? 'on' : ''}`}
-          data-tip={open ? 'Close controls' : 'Tune parameters'}
+          data-tip={open ? 'Close' : 'Parameters'}
           data-testid="lab-tune"
           aria-expanded={open}
           onClick={() => { setOpen(!open); touch() }}
@@ -80,9 +101,8 @@ export default function LabControls() {
 
       <aside className={`lab-drawer ${open ? 'open' : ''}`} data-testid="lab-drawer" aria-hidden={!open}>
         <div className="lab-drawer-head">
-          <span className="badge">PHYSICS LAB</span>
           <b>{meta.name}</b>
-          <button className="close" onClick={() => setOpen(false)} aria-label="close controls">✕</button>
+          <button className="close" onClick={() => setOpen(false)} aria-label="close">✕</button>
         </div>
         <p className="lab-blurb">{meta.blurb}</p>
 
@@ -112,7 +132,6 @@ export default function LabControls() {
                 onChange={(e) => { lab.setPendulum({ speed: +e.target.value }); touch() }} />
               <span className="v">{lab.pendulum.speed.toFixed(1)}×</span>
             </div>
-            <div className="mono-note">drag either bob · drag empty space to orbit</div>
           </>
         ) : (
           <>
@@ -136,7 +155,6 @@ export default function LabControls() {
                 slit 2 {lab.slits.slit2 ? 'open' : 'closed'}
               </button>
             </div>
-            <div className="mono-note">drag to orbit · the far screen shows the fringes</div>
           </>
         )}
 
@@ -145,7 +163,6 @@ export default function LabControls() {
             {Object.entries(lab.readout).map(([k, v]) => <span key={k}>{k} <b>{v}</b></span>)}
           </div>
         )}
-        <div className="mono-note">shell: <span style={{ color: 'var(--accent)' }}>lab {isPendulum ? 'slits' : 'pendulum'}</span> · <span style={{ color: 'var(--accent)' }}>lab reset</span> · Esc closes</div>
       </aside>
     </>
   )

@@ -90,7 +90,7 @@ export default function KafkaSandbox() {
               <span key={i} className={c.who.includes('A') ? 't-amb' : 't-vio'}>{c.who} ← {c.text}</span>
             ))}
           </div>
-          <div className="mono-note">run the producer loop and watch tracker-B’s lag grow — that red number is every streaming pipeline incident you’ve ever been paged for.</div>
+          <div className="mono-note">Run the producer loop and watch tracker-B’s lag grow.</div>
         </div>
       </div>
     </SandboxShell>

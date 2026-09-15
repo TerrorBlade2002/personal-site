@@ -54,7 +54,7 @@ export const projects: Project[] = [
     repo: gh('FraudDetection_ML'),
     featured: true,
     color: '#f87171',
-    why: 'Fraud models that only live in notebooks are demos. I wanted the full industrial loop — streaming ingestion, scheduled retraining, experiment tracking, artifact storage and distributed inference — so a model decision is reproducible and auditable end to end.',
+    why: 'A fraud model that only lives in a notebook is a demo. I wanted the full loop — streaming ingestion, scheduled retraining, experiment tracking, artifact storage and distributed inference — so every decision is reproducible and auditable end to end.',
     what: [
       'Real-time and batch ingestion from Kafka topics on Confluent Cloud, with the train/test split handled dynamically off the stream.',
       'Temporal + behavioral feature engineering (transaction velocity, spend deltas, time-of-day patterns) feeding an XGBoost classifier.',
@@ -278,7 +278,7 @@ export const projects: Project[] = [
       { stage: 'Verify', detail: 'Humans confirm or overturn; agreement metric tunes the router and gates deploys.' },
     ],
     sandbox: 'audit',
-    sandboxPitch: 'Audit a sample collection call yourself: run the mini-judge over a transcript and see verdicts appear with their cited evidence — then try to make it fail without a quote.',
+    sandboxPitch: 'Run the judge over a sample collection call and see each verdict appear with its cited evidence.',
   },
   {
     slug: 'realtime-agent-copilot',
@@ -318,7 +318,7 @@ export const projects: Project[] = [
       { stage: 'JSONL timeline', detail: 'Fused UI + audio + label events exported for the Phase 1 reducer.' },
     ],
     sandbox: 'copilot',
-    sandboxPitch: 'Watch a simulated probe session: UI signals and audio peaks stream in, and your job is to label the call state faster than the reducer guesses it.',
+    sandboxPitch: 'UI signals and audio peaks stream in from a simulated probe session. Label the call state before the reducer does.',
   },
   {
     slug: 'chatgpt-usage-tracker',
@@ -394,7 +394,7 @@ export const projects: Project[] = [
       { stage: 'Inspect', detail: 'Dashboard and JSON APIs for reports and per-notebook stats.' },
     ],
     sandbox: 'tracker-nlm',
-    sandboxPitch: 'Same fleet-analytics sandbox, NotebookLM edition — see per-notebook engagement and catch the power users.',
+    sandboxPitch: 'Per-notebook engagement across a simulated fleet, with the power users surfaced.',
   },
   {
     slug: 'book-recommender',
@@ -430,7 +430,7 @@ export const projects: Project[] = [
       { stage: 'Rank + show', detail: 'Blend similarity with the chosen tone; render the gallery.' },
     ],
     sandbox: 'books',
-    sandboxPitch: 'Search a mini-library by meaning, not keywords — then drag the emotion sliders and watch the shelf re-rank.',
+    sandboxPitch: 'Search a small library by meaning rather than keywords, then re-rank the results by emotional tone.',
   },
   {
     slug: 'autoresponder',
@@ -468,7 +468,7 @@ export const projects: Project[] = [
       { stage: 'Wait or stop', detail: 'DB scheduler fires the single follow-up after 1 day; any reply → human.' },
     ],
     sandbox: 'responder',
-    sandboxPitch: 'Play inbound replies at the policy engine — interested, partial details, a question, silence — and watch it decide, wait, follow up exactly once, and hand off.',
+    sandboxPitch: 'Send inbound replies to the policy engine — interested, partial details, a question, silence — and watch it decide, wait, follow up once, and hand off.',
   },
   {
     slug: 'prompt-optimization-gepa',
@@ -519,7 +519,7 @@ export const projects: Project[] = [
     repo: gh('Let-s-Chat'),
     featured: false,
     color: '#60a5fa',
-    why: 'Every engineer needs a first app that strangers can actually open. This one taught realtime listeners, auth flows and the gap between "works locally" and "deployed".',
+    why: 'My first deployed application. It taught me realtime listeners, auth flows, and the distance between working locally and working in production.',
     what: [
       'Realtime messaging over Firebase with live listeners — messages appear without refresh.',
       'Google auth, responsive layout, deployed on Firebase Hosting.',
@@ -537,7 +537,7 @@ export const projects: Project[] = [
       { stage: 'Render', detail: 'React reconciles the live message list.' },
     ],
     sandbox: 'chat',
-    sandboxPitch: 'Hop into a simulated room and chat with the resident bots — realtime UX, zero servers harmed.',
+    sandboxPitch: 'Join a simulated room and chat with the resident bots.',
   },
   {
     slug: 'ecomm',
@@ -552,7 +552,7 @@ export const projects: Project[] = [
     repo: gh('E-Comm-22'),
     featured: false,
     color: '#facc15',
-    why: 'The origin story: my first full product build. Server-rendered pages, a real database schema, cart logic and the discovery that the admin panel is the best feature Django ships.',
+    why: 'My first full product build: server-rendered pages, a real database schema, cart logic, and Django’s admin panel carrying more weight than expected.',
     what: [
       'Product catalog with original + discounted pricing stored in SQLite.',
       'Django views/urls/admin structure with AJAX-powered dropdowns.',
@@ -570,7 +570,7 @@ export const projects: Project[] = [
       { stage: 'Admin', detail: 'Inventory and pricing managed in Django admin.' },
     ],
     sandbox: 'ecomm',
-    sandboxPitch: 'A pocket storefront: add to cart, apply the SOC22 coupon, and check out — the whole loop in miniature.',
+    sandboxPitch: 'Add to cart, apply a coupon, and check out — the whole purchase loop in miniature.',
   },
   {
     slug: 'kafka-events',
@@ -585,11 +585,11 @@ export const projects: Project[] = [
     repo: gh('food-delivery-events-backend'),
     featured: false,
     color: '#a3e635',
-    why: 'Before Kafka carries your fraud pipeline, you should be able to explain it on a whiteboard. This is the whiteboard version: one broker in KRaft mode, one producer, one consumer, zero magic.',
+    why: 'Before Kafka carries a fraud pipeline, the mental model should be explainable on a whiteboard: one broker in KRaft mode, one producer, one consumer.',
     what: [
       'Single-node Kafka broker via Docker Compose running in KRaft mode (no ZooKeeper).',
       'producer.py publishes order events to the orders topic; tracker.py consumes and prints them.',
-      'Deliberately minimal — the point is the mental model: topics, offsets, consumer polling.',
+      'Deliberately minimal, so the mental model stays visible: topics, offsets, consumer polling.',
     ],
     stack: ['Python', 'Apache Kafka', 'confluent-kafka', 'Docker Compose'],
     numbers: [
@@ -602,7 +602,7 @@ export const projects: Project[] = [
       { stage: 'Consume', detail: 'Tracker polls, deserializes and prints each order.' },
     ],
     sandbox: 'kafka',
-    sandboxPitch: 'Fire orders into a visual topic and watch consumers race through the log — offsets, lag and all.',
+    sandboxPitch: 'Produce orders into a visual topic and watch two consumers work through the log at different speeds.',
   },
   {
     slug: 'verbal-assessment',
@@ -638,7 +638,7 @@ export const projects: Project[] = [
       { stage: 'Persist', detail: 'Results written to Firestore with assessment status tracking.' },
     ],
     sandbox: 'verbal',
-    sandboxPitch: 'Take a one-question mini-assessment: answer in text, get scored on the same four axes by a toy grader that explains itself.',
+    sandboxPitch: 'Answer one interview question and get scored on the same four axes, with the reasoning shown for each.',
   },
 ]
 
